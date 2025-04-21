@@ -239,7 +239,7 @@ k8s-basics-assignment-bonus-service               3m20s
 **Below commands can be used to delete deployments and services**  
 
 - To delete Deployment:
-    > kubectl delete deployment <deployment-name>  
+    > kubectl delete deployment `deployment-name`  
 
 - To delete Service:
-    > kubectl delete service <service-name>  
+    > kubectl delete service `service-name`  
