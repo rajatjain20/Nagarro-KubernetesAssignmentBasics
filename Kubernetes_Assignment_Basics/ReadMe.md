@@ -6,11 +6,14 @@
 
 **Below is the directory structure**  
 
- `./app/`                 - it contains helloworld application with its Dockerfile.  
- `./Deployment.yaml`      - this is deployment yaml file to deploy application on kubernetes cluster.  
- `./Service.yaml`         - this is service yaml file to expose the application to excess it externally (outside kubernetes).  
- `./Deployment-Bonus.yaml`  - this is deployment yaml file for bonus question having liveness and readiness probes configured.  
-`./Installation_kubernetes.docx` - Steps to install Kubernetes on windows machine.  
+| Path                       | Description                                                   |
+|---------------------------|---------------------------------------------------------------|
+| `./app/`                  | It contains helloworld application with its Dockerfile.       |
+| `./Deployment.yaml`       | Deployment YAML file for Kubernetes.                          |
+| `./Service.yaml`          | Service YAML to expose the app externally.                    |
+| `./Deployment-Bonus.yaml` | Bonus deployment with liveness & readiness probes.            |
+| `./Installation_kubernetes.docx` | Steps to install Kubernetes on Windows.              |
+| `./Helloworld_App_SS.jpg` | Screenshot of the helloworld web app.                         |
 
 # Create Docker image inside kubernetes cluster (I am using kubernetes on my local machine. we can use image from dockerhub as well)
 
@@ -49,17 +52,21 @@ I have created a yaml file named "Deployment.yaml", placed inside "./Kubernetes_
 - To check deployment:
     > kubectl get all  
 
-NAME                                         READY   STATUS    RESTARTS   AGE  
-pod/k8s-basics-assignment-859b784cb7-w2kk2   1/1     Running   0          33s  
+|NAME                                       |  READY  | STATUS   |  RESTARTS |  AGE |  
+|-------------------------------------------|---------|----------|-----------|------|
+|pod/k8s-basics-assignment-859b784cb7-w2kk2 |  1/1    | Running  |  0        |  33s |
 
-NAME                 TYPE        CLUSTER-IP   EXTERNAL-IP   PORT(S)   AGE  
-service/kubernetes   ClusterIP   10.96.0.1    <none>        443/TCP   3d1h  
+|NAME                | TYPE      |  CLUSTER-IP |  EXTERNAL-IP |  PORT(S) |  AGE  |
+|--------------------|-----------|-------------|--------------|----------|-------|
+|service/kubernetes  | ClusterIP |  10.96.0.1  |  <none>      |  443/TCP |  3d1h | 
 
-NAME                                    READY   UP-TO-DATE   AVAILABLE   AGE  
-deployment.apps/k8s-basics-assignment   1/1     1            1           33s  
+|NAME                                  |  READY |  UP-TO-DATE |  AVAILABLE |  AGE |
+|--------------------------------------|--------|-------------|------------|------| 
+|deployment.apps/k8s-basics-assignment |  1/1   |  1          |  1         |  33s | 
 
-NAME                                               DESIRED   CURRENT   READY   AGE  
-replicaset.apps/k8s-basics-assignment-859b784cb7   1         1         1       33s  
+|NAME                                             |  DESIRED |  CURRENT |  READY |  AGE |  
+|-------------------------------------------------|----------|----------|--------|------|
+|replicaset.apps/k8s-basics-assignment-859b784cb7 |  1       |  1       |  1     |  33s | 
 
 # Expose the application using a Kubernetes Service to access it externally.  
 I have created a yaml file named "Service.yaml", placed inside directory "./Kubernetes_Assignment_Basics/"  
@@ -75,9 +82,10 @@ I have created a yaml file named "Service.yaml", placed inside directory "./Kube
 - To Check created service:
     >kubectl get services  
 
-NAME                            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE  
-`k8s-basics-assignment-service   NodePort    10.109.137.31   <none>        3010:30036/TCP   79s`  
-kubernetes                      ClusterIP   10.96.0.1       <none>        443/TCP          3d3h  
+|NAME                            | TYPE        |  CLUSTER-IP      |  EXTERNAL-IP |  PORT(S)          |  AGE   |  
+|--------------------------------|-------------|------------------|--------------|-------------------|--------|  
+|`k8s-basics-assignment-service` |  `NodePort` |  `10.109.137.31` |  `<none>`    |  `3010:30036/TCP` |  `79s` |  
+|kubernetes                      | ClusterIP   |  10.96.0.1       |  <none>      |  443/TCP          |  3d3h  |  
 
 - To run exposed application locally:
     > minikube service k8s-basics-assignment-service  
@@ -122,18 +130,20 @@ kubernetes                      ClusterIP   10.96.0.1       <none>        443/TC
 - To verify scaled application:  
     > kubectl get deployment k8s-basics-assignment  
 
-NAME                    READY   UP-TO-DATE   AVAILABLE   AGE  
-k8s-basics-assignment   5/5     5            5           31m  
+|NAME                  |  READY |  UP-TO-DATE |  AVAILABLE |  AGE |  
+|----------------------|--------|-------------|------------|------|  
+|k8s-basics-assignment |  5/5   |  5          |  5         |  31m |  
 
 - To check pods:
     > kubectl get pods  
 
-NAME                                    READY   STATUS    RESTARTS   AGE  
-k8s-basics-assignment-898db5488-7htxt   1/1     Running   0          2m15s  
-k8s-basics-assignment-898db5488-kvsng   1/1     Running   0          2m15s  
-k8s-basics-assignment-898db5488-n989j   1/1     Running   0          2m15s  
-k8s-basics-assignment-898db5488-n9jh7   1/1     Running   0          31m  
-k8s-basics-assignment-898db5488-wfpkm   1/1     Running   0          2m15s  
+|NAME                                  |  READY |  STATUS  |  RESTARTS |  AGE   |  
+|--------------------------------------|--------|----------|-----------|--------|  
+|k8s-basics-assignment-898db5488-7htxt |  1/1   |  Running |  0        |  2m15s |  
+|k8s-basics-assignment-898db5488-kvsng |  1/1   |  Running |  0        |  2m15s |  
+|k8s-basics-assignment-898db5488-n989j |  1/1   |  Running |  0        |  2m15s |  
+|k8s-basics-assignment-898db5488-n9jh7 |  1/1   |  Running |  0        |  31m   |  
+|k8s-basics-assignment-898db5488-wfpkm |  1/1   |  Running |  0        |  2m15s |  
 
 
 # Bonus Question -
@@ -150,8 +160,9 @@ This endpoint returns error code (500) after 30secs of the server startup and ke
 
     > kubectl get deployment k8s-basics-assignment-bonus  
 
-NAME                          READY   UP-TO-DATE   AVAILABLE   AGE  
-k8s-basics-assignment-bonus   1/1     1            1           16s  
+|NAME                        |  READY |  UP-TO-DATE |  AVAILABLE |  AGE |  
+|----------------------------|--------|-------------|------------|------|  
+|k8s-basics-assignment-bonus |  1/1   |  1          |  1         |  16s |  
 
 - Expose this to a service:
     > kubectl expose deployment k8s-basics-assignment-bonus --name=k8s-basics-assignment-bonus-service --port=3020 --target-port=3000 --type=NodePort  
@@ -160,49 +171,55 @@ k8s-basics-assignment-bonus   1/1     1            1           16s
 
     > kubectl get service k8s-basics-assignment-bonus-service  
 
-NAME                                  TYPE       CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE  
-k8s-basics-assignment-bonus-service   NodePort   10.105.184.6   <none>        3020:30278/TCP   13s  
+NAME                                |   TYPE    |    CLUSTER-IP |    EXTERNAL-IP |  PORT(S)        |  AGE |
+|-----------------------------------|-----------|---------------|----------------|-----------------|------|  
+k8s-basics-assignment-bonus-service |  NodePort |  10.105.184.6 |  <none>        |  3020:30278/TCP |  13s | 
 
     > kubectl get endpoints k8s-basics-assignment-bonus-service -o wide  
 
-NAME                                  `ENDPOINTS`          AGE  
-k8s-basics-assignment-bonus-service   `10.244.0.64:3000`   31s  
+|NAME                                |  `ENDPOINTS`        |  AGE |  
+|------------------------------------|---------------------|------|
+|k8s-basics-assignment-bonus-service |  `10.244.0.64:3000` |  31s |  
 
 - Wait for ~50secs or more and check the resources:  
     > kubectl get all  
 
-NAME                                               READY   STATUS    RESTARTS      AGE  
-pod/k8s-basics-assignment-898db5488-wvcw9           1/1     Running      0           38h  
-`pod/k8s-basics-assignment-bonus-7f96c49df4-kcwz9   1/1     Running   1 (38s ago)   93s`  
+NAME                                                | READY    | STATUS     | RESTARTS      | AGE    |
+|---------------------------------------------------|----------|------------|---------------|--------|  
+|pod/k8s-basics-assignment-898db5488-wvcw9          |  1/1     |  Running   |     0         |  38h   |
+|`pod/k8s-basics-assignment-bonus-7f96c49df4-kcwz9` |  `1/1`   |  `Running` | `1 (38s ago)` |  `93s` |  
 
-NAME                                          TYPE        CLUSTER-IP     EXTERNAL-IP   PORT(S)          AGE  
-`service/k8s-basics-assignment-bonus-service  NodePort    10.105.184.6   <none>        3020:30278/TCP   53s`  
-service/k8s-basics-assignment-service         NodePort    10.110.49.91   <none>        3010:30036/TCP   38h  
-service/kubernetes                            ClusterIP   10.96.0.1      <none>        443/TCP          9d  
+|NAME                                         | TYPE      | CLUSTER-IP    | EXTERNAL-IP|   PORT(S)      |   AGE |  
+|---------------------------------------------|-----------|---------------|------------|----------------|-------|  
+|`service/k8s-basics-assignment-bonus-service`| `NodePort`| `10.105.184.6`|  `<none>`  |`3020:30278/TCP`|  `53s`|   
+|service/k8s-basics-assignment-service        | NodePort  |  10.110.49.91 |  <none>    |3010:30036/TCP |  38h  |    
+|service/kubernetes                           | ClusterIP |  10.96.0.1    |  <none>    |443/TCP        |  9d   |  
 
-NAME                                          READY   UP-TO-DATE   AVAILABLE   AGE  
-deployment.apps/k8s-basics-assignment         1/1     1            1           38h  
-`deployment.apps/k8s-basics-assignment-bonus   1/1     1            1           93s`  
+|NAME                                         | READY |  UP-TO-DATE |  AVAILABLE |  AGE  |  
+|---------------------------------------------|-------|-------------|------------|-------|  
+|deployment.apps/k8s-basics-assignment        | 1/1   |  1          |  1         |  38h  |  
+|`deployment.apps/k8s-basics-assignment-bonus`| `1/1` |  `1`        |  `1`       |  `93s`|  
 
-NAME                                                     DESIRED   CURRENT   READY   AGE  
-replicaset.apps/k8s-basics-assignment-898db5488          1         1         1       38h  
-`replicaset.apps/k8s-basics-assignment-bonus-7f96c49df4   1         1         1       93s`  
+|NAME                                                     | DESIRED |  CURRENT |  READY |  AGE  |  
+|---------------------------------------------------------|---------|----------|--------|-------|  
+|replicaset.apps/k8s-basics-assignment-898db5488          |   1     |    1     |    1   |  38h  |
+|`replicaset.apps/k8s-basics-assignment-bonus-7f96c49df4` |  `1`    |    `1`   |   `1`  |  `93s`|  
 
 - Let's check the events in pod (pick the pod name from above command)**  
     > kubectl describe pod k8s-basics-assignment-bonus-7f96c49df4-kcwz9  
 
 Events:  
-  Type     Reason     Age                 From               Message  
-  ----     ------     ----                ----               -------  
-  Normal   Scheduled  2m19s               default-scheduler  Successfully assigned default/k8s-basics-assignment-bonus-7f96c49df4-kcwz9 to minikube  
-  Normal   Pulling    2m19s               kubelet            Pulling image "rajatjain20/k8sassignmentbasics:v1"  
-  Normal   Pulled     2m8s                kubelet            Successfully pulled image "rajatjain20/k8sassignmentbasics:v1" in 10.778s (10.778s including waiting). Image size: 918814242 bytes.  
-  Normal   Created    39s (x3 over 2m7s)  kubelet            Created container: kubernetes-assignment-bonus  
-  Normal   Started    39s (x3 over 2m7s)  kubelet            Started container kubernetes-assignment-bonus  
-  `Normal   Killing    39s (x2 over 84s)   kubelet            Container kubernetes-assignment-bonus failed liveness probe, will be restarted`  
-  Normal   Pulled     39s (x2 over 84s)   kubelet            Container image "rajatjain20/k8sassignmentbasics:v1" already present on machine  
-  `Warning  Unhealthy  4s (x7 over 94s)    kubelet            Liveness probe failed: HTTP probe failed with statuscode: 500`  
-  `Warning  Unhealthy  3s (x12 over 95s)   kubelet            Readiness probe failed: HTTP probe failed with statuscode: 500`  
+  |Type     | Reason      | Age                | From             |  Message | 
+  |---------|-------------|--------------------|------------------|----------|
+  |Normal   |  Scheduled  | 2m19s              |default-scheduler | Successfully assigned default/k8s-basics-assignment-bonus-7f96c49df4-kcwz9 to minikube|  
+  |Normal   |  Pulling    | 2m19s              | kubelet          | Pulling image "rajatjain20/k8sassignmentbasics:v1" | 
+  |Normal   |  Pulled     | 2m8s               | kubelet          | Successfully pulled image "rajatjain20/k8sassignmentbasics:v1" in 10.778s (10.778s including waiting). Image size: 918814242 bytes.|
+  |Normal   |  Created    | 39s (x3 over 2m7s) | kubelet          | Created container: kubernetes-assignment-bonus|  
+  |Normal   |  Started    | 39s (x3 over 2m7s) | kubelet          | Started container kubernetes-assignment-bonus|  
+  |Normal   |   `Killing` | 39s (x2 over 84s)  | kubelet          | `Container kubernetes-assignment-bonus failed liveness probe, will be restarted`|  
+  |Normal   | Pulled      | 39s (x2 over 84s)  | kubelet          |  Container image "rajatjain20/k8sassignmentbasics:v1" already present on machine|  
+  |`Warning`|  `Unhealthy`| 4s (x7 over 94s)   |   kubelet        |  `Liveness probe failed: HTTP probe failed with statuscode: 500`|  
+  |`Warning`|  `Unhealthy`| 3s (x12 over 95s)  |   kubelet        |  `Readiness probe failed: HTTP probe failed with statuscode: 500`|  
 
 
 - Check logs on the pod:
@@ -230,8 +247,9 @@ Listning at port :3000
 - Check if pod was removed from service endpoint (`if pod IP is not listed that means Readines Probe failed`)          
     > kubectl get endpoints k8s-basics-assignment-bonus-service -o wide  
 
-NAME                                  `ENDPOINTS`   AGE  
-k8s-basics-assignment-bonus-service               3m20s  
+|NAME                                |  `ENDPOINTS` |  AGE  |
+|------------------------------------|--------------|-------|
+|k8s-basics-assignment-bonus-service |              | 3m20s | 
 
 **Note:** Endpoints has been removed that is because of Readiness Probe failure.  
 
