@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment    # resource type
+metadata:
+  name: k8s-basics-assignment # name of the deployment
+spec:
+  replicas: 1   # tells deployment to run 1 pod matching the template
+  #replicas: 5   # scale the application to make replica count 5
+  selector:
+    matchLabels:
+      app: kubernetes-assignment
+  template:   # create pods using pod definition in this template
+    metadata:
+      labels:
+        app: kubernetes-assignment
+    spec:
+      containers:
+        - name: kubernetes-assignment
+          # image should be created inside kubernetes cluster or should be available on container registry like Docker Hub
+          #image: k8sassignmentbasics:v0            # image should be created/available inside kubernetes cluster
+          image: rajatjain20/k8sassignmentbasics:v0 # pull image from docker hub
+          ports:
+            - containerPort: 3000
+          env:      # to set Environment variable
+            - name: "POD_NAME"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name

@@ -1,0 +1,14 @@
+# application service for nodeports
+apiVersion: v1
+kind: Service   # resource type
+metadata:
+  name: k8s-basics-assignment-service # name of the service
+spec:
+  type: NodePort
+  ports:
+  - port: 3010          # Exposed port to excess the application externally
+    protocol: TCP
+    targetPort: 3000    # helloworld app's port
+    nodePort: 30036     # Optional: pick a port between 30000-32767
+  selector:             # Service points to the pod using selector lable
+    app: kubernetes-assignment

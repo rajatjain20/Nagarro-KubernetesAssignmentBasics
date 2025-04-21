@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment    # resource type
+metadata:
+  name: k8s-basics-assignment-bonus # name of the deployment
+spec:
+  replicas: 1   # tells deployment to run 1 pod matching the template
+  selector:
+    matchLabels:
+      app: kubernetes-assignment-bonus
+  template:   # create pods using pod definition in this template 
+    metadata:
+      labels:
+        app: kubernetes-assignment-bonus
+    spec:
+      terminationGracePeriodSeconds: 10 # pod level
+      containers:
+        - name: kubernetes-assignment-bonus
+          image: rajatjain20/k8sassignmentbasics:v1 # pull image from docker hub
+          #image: k8sassignmentbasics:test
+
+          ports:
+            - name: bonus-port      # named port 
+              containerPort: 3000
+          
+          env:      # to set Environment variable
+            - name: "POD_NAME"
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+          
+          # liveness probe
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: bonus-port      # using named port
+            initialDelaySeconds: 5  # wait before first probe
+            periodSeconds: 5        # kubelet will perform liveness probe every 5 secs
+            failureThreshold: 3     # if 3 probes failed, container is considered unhealthy and triggers a restart for that specific container 
+            terminationGracePeriodSeconds: 5   # probe level
+          
+          # readiness probe
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: bonus-port      # using named port
+            initialDelaySeconds: 5  # wait before first probe
+            periodSeconds: 5        # kubelet will perform readiness probe every 5 secs
+            
