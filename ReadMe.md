@@ -9,12 +9,12 @@
 
 | Path                       | Description                                                   |
 |---------------------------|---------------------------------------------------------------|
-| `./app/`                  | It contains helloworld application with its Dockerfile.       |
-| `./Deployment.yaml`       | Deployment YAML file for Kubernetes.                          |
-| `./Service.yaml`          | Service YAML to expose the app externally.                    |
-| `./Deployment-Bonus.yaml` | Bonus deployment with liveness & readiness probes.            |
+| `./Kubernetes_Assignment_Basics/app/`                  | It contains helloworld application with its Dockerfile.       |
+| `./Kubernetes_Assignment_Basics/Deployment.yaml`       | Deployment YAML file for Kubernetes.                          |
+| `./Kubernetes_Assignment_Basics/Service.yaml`          | Service YAML to expose the app externally.                    |
+| `./Kubernetes_Assignment_Basics/Deployment-Bonus.yaml` | Bonus deployment with liveness & readiness probes.            |
+| `./Kubernetes_Assignment_Basics/Helloworld_App_SS.jpg` | Screenshot of the helloworld web app.                         |
 | `./Installation_kubernetes.docx` | Steps to install Kubernetes on Windows.              |
-| `./Helloworld_App_SS.jpg` | Screenshot of the helloworld web app.                         |
 
 ## Create Docker image inside kubernetes cluster (I am using kubernetes on my local machine. we can use image from dockerhub as well)
 
