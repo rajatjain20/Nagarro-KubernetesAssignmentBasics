@@ -184,6 +184,8 @@ This endpoint returns error code (500) after 30secs of the server startup and ke
     replicaset.apps/k8s-basics-assignment-898db5488          5         5         5       29m
     replicaset.apps/k8s-basics-assignment-bonus-7f96c49df4   1         1         1       10m 👈</pre> 
 
+    We can see `pod/k8s-basics-assignment-bonus-7f96c49df4-nppmz` was restarted 7 times. That is because of Liveness failure. We can verify this in pod description's Events section in next step.
+
 - Let's check the events in pod (pick the pod name from above command):  
     <pre> > kubectl describe pod k8s-basics-assignment-bonus-7f96c49df4-nppmz  
     Name:             k8s-basics-assignment-bonus-7f96c49df4-nppmz
@@ -205,6 +207,9 @@ This endpoint returns error code (500) after 30secs of the server startup and ke
     Normal   Pulled     39s (x8 over 15m)    kubelet            Container image "rajatjain20/k8sassignmentbasics:v1" already present on machine
     Warning  Unhealthy  7s (x38 over 15m)    kubelet            Readiness probe failed: HTTP probe failed with statuscode: 500 👈</pre>
 
+    If we check the Messages against `Unhealthy` warnings, the first time pod was Unhealthy due to Liveness probe failed and the next Unhealthy was due to Readiness probe failed.
+
+    Also, if we check the Message for the reason of `Killing` the pod, it says `Container kubernetes-assignment-bonus failed liveness probe, will be restarted`. 
 
 - Check logs on the pod:
     <pre> > kubectl logs pod/k8s-basics-assignment-bonus-7f96c49df4-nppmz
@@ -237,7 +242,6 @@ This endpoint returns error code (500) after 30secs of the server startup and ke
     k8s-basics-assignment-bonus-service               19m</pre>
 
 **`Note:`** Endpoint has been removed that is because of Readiness Probe failure.  
-
 
 ### Below commands can be used to delete deployments and services  
 
