@@ -2,6 +2,9 @@
 
 **`Note:`** I have installed Kubernetes and minikube on my windows machine. (Refer Installation_kubernetes.docx`) 
 
+Start Minikube using the following command:
+<pre>minikube start --driver=docker </pre>
+
 ## Overview
  I have created one helloworld app in golang. It is just one static page.  
    
@@ -16,11 +19,10 @@
 | `./Kubernetes_Assignment_Basics/Helloworld_App_SS.jpg` | Screenshot of the helloworld web app.                         |
 | `./Installation_kubernetes.docx` | Steps to install Kubernetes on Windows.              |
 
-## Create Docker image inside kubernetes cluster (I am using kubernetes on my local machine. we can use image from dockerhub as well)
+## Create Docker image inside Kubernetes cluster
 
-Below commands are not necessary to run as I have pushed docker image to docker hub. 
+This part can be skipped as it is not necessary to build an image inside Kubernetes cluster. I am using pushed image from docker hub in deployments.
 
-We can skip this part and jump to next step - `Deployment of application in Kubernetes Cluster`
 - Execute Windows PowerShell.
 
 - Command to set Windows Poweshell to use Minikube’s Docker daemon:
@@ -37,9 +39,11 @@ We can skip this part and jump to next step - `Deployment of application in Kube
 - Command to build image inside kubernetes  
 
     <pre> > docker build -t k8sassignmentbasics:v0 . </pre> 
-    <pre> > docker images  </pre>
+    <pre> > docker images
+    REPOSITORY                      TAG        IMAGE ID       CREATED          SIZE
+    k8sassignmentbasics             v0         6b2d4a666de9   10 seconds ago   919MB</pre>
 
-    It should show image with name "k8sassignmentbasics:v0"
+    Image has been created inside Kubernetes cluster as shown above.
 
 ## Deployment of application in Kubernetes Cluster
 
